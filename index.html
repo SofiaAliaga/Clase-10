@@ -58,7 +58,7 @@
                 </thead>
                 <tbody id="jp"></tbody>
             </table>
-            <h2>En México</h2>
+            <h2>En Alaska</h2>
             <table>
                 <thead>
                     <tr>
@@ -68,7 +68,7 @@
                         <th>🌊 tsunami</th>
                     </tr>
                 </thead>
-                <tbody id="mx"></tbody>
+                <tbody id="ak"></tbody>
             </table>
             <h2>En Rusia</h2>
             <table>
@@ -86,22 +86,22 @@
             <p>Registros sobre 2.5 M de la última semana:</p>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50" id="viz"></svg>
             <footer>
-                <p>Desarrollado por <a href="#" target="_blank">Nombre Apellido</a> &copy; 2025</p>
+                <p>Desarrollado por <a href="https://github.com/SofiaAliaga" target="_blank">Sofía Aliaga</a> &copy; 2025</p>
             </footer>
         </div>
         <script>
             const chilenos = document.getElementById("cl");
-            const mexicanos = document.getElementById("mx");
+            const alaskeños = document.getElementById("ak");
             const japoneses = document.getElementById("jp");
             const rusos = document.getElementById("ru");
 
             var conteoChilenos = 0;
-            var conteoMexicanos = 0;
+            var conteoAlaskeños = 0;
             var conteoJaponeses = 0;
             var conteoRusos = 0;
 
             async function datos(url) {
-                try {
+                 try {
                     let consulta = await fetch(url);
                     let data = await consulta.json();
                     let temblores = data.features;
@@ -118,32 +118,32 @@
                             conteoChilenos++;
                         }
                         //si es que dice Mexico en el place
-                        if (t.properties.place.includes("Mexico")) {
-                            mexicanos.innerHTML += `<tr>
-                            <td>…</td>
-                            <td>…</td>
-                            <td>…</td>
-                            <td>…</td>
+                        if (t.properties.place.includes("Alaska")) {
+                            alaskeños.innerHTML += `<tr>
+                            <td><a href="${t.properties.url}" target="_blank">${t.properties.place}</a></td>
+                            <td>${tiempo(t.properties.time)}</td>
+                            <td>${magnitud(t.properties.mag)}</td>
+                            <td>${tsunami(t.properties.tsunami)}</td>
                         </tr>`;
-                            conteoMexicanos++;
+                            conteoAlaskeños++;
                         }
                         //si es que dice Japan en el place
-                        if (t.properties.place.includes("Japan")) {
+                         if (t.properties.place.includes("Japan")) {
                             japoneses.innerHTML += `<tr>
-                            <td>…</td>
-                            <td>…</td>
-                            <td>…</td>
-                            <td>…</td>
+                            <td><a href="${t.properties.url}" target="_blank">${t.properties.place}</a></td>
+                            <td>${tiempo(t.properties.time)}</td>
+                            <td>${magnitud(t.properties.mag)}</td>
+                            <td>${tsunami(t.properties.tsunami)}</td>
                         </tr>`;
                             conteoJaponeses++;
                         }
                         //si es que dice Russia en el place
-                        if (t.properties.place.includes("Russia")) {
+                          if (t.properties.place.includes("Russia")) {
                             rusos.innerHTML += `<tr>
-                            <td>…</td>
-                            <td>…</td>
-                            <td>…</td>
-                            <td>…</td>
+                            <td><a href="${t.properties.url}" target="_blank">${t.properties.place}</a></td>
+                            <td>${tiempo(t.properties.time)}</td>
+                            <td>${magnitud(t.properties.mag)}</td>
+                            <td>${tsunami(t.properties.tsunami)}</td>
                         </tr>`;
                             conteoRusos++;
                         }
@@ -153,7 +153,7 @@
 
                     document.getElementById("viz").innerHTML += `<g transform="translate(25)"><circle cx="10" cy="25" r="${conteoJaponeses / 2}" fill="darkmagenta"></circle><text x="10" y="25" font-size="1.5" dominant-baseline="middle" text-anchor="middle" fill="white">${conteoJaponeses}</text><text x="10" y="45" font-size="2" dominant-baseline="middle" text-anchor="middle">Japón</text><g>`;
 
-                    document.getElementById("viz").innerHTML += `<g transform="translate(50)"><circle cx="10" cy="25" r="${conteoMexicanos / 2}" fill="darkmagenta"></circle><text x="10" y="25" font-size="1.5" dominant-baseline="middle" text-anchor="middle" fill="white">${conteoMexicanos}</text><text x="10" y="45" font-size="2" dominant-baseline="middle" text-anchor="middle">México</text><g>`;
+                    document.getElementById("viz").innerHTML += `<g transform="translate(50)"><circle cx="10" cy="25" r="${conteoAlaskeños / 2}" fill="darkmagenta"></circle><text x="10" y="25" font-size="1.5" dominant-baseline="middle" text-anchor="middle" fill="white">${conteoAlaskeños}</text><text x="10" y="45" font-size="2" dominant-baseline="middle" text-anchor="middle">Alaska</text><g>`;
 
                     document.getElementById("viz").innerHTML += `<g transform="translate(75)"><circle cx="10" cy="25" r="${conteoRusos / 2}" fill="darkmagenta"></circle><text x="10" y="25" font-size="1.5" dominant-baseline="middle" text-anchor="middle" fill="white">${conteoRusos}</text><text x="10" y="45" font-size="2" dominant-baseline="middle" text-anchor="middle">Rusia</text><g>`;
                 } catch (error) {
@@ -174,6 +174,8 @@
                 var dato = new Date(unix);
                 return dato.toISOString();
             }
+
+
 
             function tsunami(x) {
                 var mensaje = "<span>Sin alerta</span>";
